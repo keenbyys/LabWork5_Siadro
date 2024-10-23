@@ -24,9 +24,9 @@ namespace LW5_Siadro
 
         public override void DisplayInfo()
         {
-            Console.WriteLine(" Name: {0}\n" +
-                " Species: {1}\n" +
-                " Age: {2}\n", Name, Species, Age);
+            Console.WriteLine("\n Name: {0}" +
+                "\n Species: {1}" +
+                "\n Age: {2}", Name, Species, Age);
         }
 
         public void EatPlants()

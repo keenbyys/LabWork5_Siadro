@@ -13,32 +13,23 @@ namespace LW5_Siadro
     {
         private List<Animal> animals = new List<Animal>();
 
-        public void AddElephant(Elephant elephant) // Додавати нових тварин до зоопарку, вказуючи вид тварини
+        public void AddElephant(Elephant elephant)
         {
             animals.Add(elephant);
         }
 
-        public void AddLion(Lion lion) // Додавати нових тварин до зоопарку, вказуючи вид тварини
+        public void AddLion(Lion lion)
         {
             animals.Add(lion);
         }
 
-        public void PrintAllAnimals() // Виводити список усіх тварин із нумерацією.
+        public void PrintAllAnimals()
         {
-            switch (animals.Count)
-            {
-                case 0:
-                    Console.WriteLine(" ви ще не додали тварин до зоопарку! Спробуйте додати тварину до зоопарку через розділ додати тварину.");
-                    break;
-
-                default:
-                    for (int i = 0; i < animals.Count; i++)
-                        Console.WriteLine(" {0}. {1}", i, animals[i].Name);
-                    break;
-            }
+            for (int i = 0; i < animals.Count; i++)
+                Console.WriteLine(" {0}. {1}", i, animals[i].Name);
         }
 
-        public void PrintAnimalDetails(int listNumber) // Виводити детальну інформацію про конкретну тварину за номером
+        public void PrintAnimalDetails(int listNumber) 
         {
             switch (listNumber)
             {
@@ -72,26 +63,17 @@ namespace LW5_Siadro
             string fileName = "C:\\Users\\sjdro\\source\\repos\\LabWork5_Siadro\\LW5_Siadro\\LW5_Siadro\\animals.xml";
             try 
             {
-                if (!File.Exists(fileName))
-                {
-                    using(FileStream ass = File.Create(fileName))
-                    {
-                    }
-
-                    Console.WriteLine(" tipa sosdali");
-                }
-
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Animal>), new Type[] { typeof(Elephant), typeof(Lion) });
 
                 using (FileStream streamWriter = new FileStream(fileName, FileMode.Create))
                 {
                     serializer.Serialize(streamWriter, animals);
                 }
-                Console.WriteLine(" Данні успішно збережені: {0}", fileName);
+                Console.WriteLine("\n  Data successfully saved: {0}", fileName);
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("\n The data has not been saved");
             }
         }
 
@@ -108,11 +90,11 @@ namespace LW5_Siadro
                 {
                     animals = (List<Animal>)serializer.Deserialize(streamReader);
                 }
-                Console.WriteLine(" Данні успішно завантажені: {0}", fileName);
+                Console.WriteLine("\n Data successfully loaded: {0}", fileName);
             }
             catch
             {
-                Console.WriteLine(" Помилка.");
+                Console.WriteLine("\n No data has been loaded.");
             }
         }
 
@@ -121,11 +103,11 @@ namespace LW5_Siadro
             switch (animals.Count)
             {
                 case 0:
-                    Console.WriteLine(" Нічого немає, сорри");
+                    Console.WriteLine("\n There's no data.");
                     break;
 
                 default:
-                    Console.WriteLine(" завантажені данні");
+                    Console.WriteLine(" Loaded data: ");
                     for (int i = 0; i < animals.Count; i++)
                         Console.WriteLine(" {0}. {1}", i, animals[i].Name);
                     break;

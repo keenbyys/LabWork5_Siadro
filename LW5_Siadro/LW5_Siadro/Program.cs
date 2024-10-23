@@ -13,7 +13,6 @@ namespace LW5_Siadro
     {
         private static AnimalSystem animalSystem = new AnimalSystem();
 
-        private static Animal animal;
         private static Lion lion;
         private static Elephant elephant;
 
@@ -22,9 +21,6 @@ namespace LW5_Siadro
         private static int age;
         private static int choice;
         private static bool isInputCorrect = true;
-
-        // Викликати методи EatMeat() або EatPlants() для відповідних тварин. вопрос будет от програмы, когда человек просмотрел
-        // детально животное, не хочет ли он его покормить
 
         // MAIN MENU
         public static void MainMenu()
@@ -186,6 +182,7 @@ namespace LW5_Siadro
                     
                     Console.Write("\n Your choice: ");
                     name = Console.ReadLine();
+                    
                     ReinterpretationNameAnimal(choiceAnimal, name);
                     isInputCorrect = false;
                 }
@@ -256,37 +253,8 @@ namespace LW5_Siadro
                     Console.Write("\n Your choice (number): ");
                     age = Convert.ToInt32(Console.ReadLine());
 
-                    if (age > 0 && name != "")
-                    {
-                        switch (choiceAnimal)
-                        {
-                            case 1:
-                                Console.Clear();
-                                species = "Herbivore";
-                                elephant = new Elephant(name, species, age);
-                                animalSystem.AddElephant(elephant);
-                                MainMenu();
-                                isInputCorrect = false;
-                                break;
-
-                            case 2:
-                                Console.Clear();
-                                species = "Carnivore";
-                                lion = new Lion(name, species, age);
-                                animalSystem.AddLion(lion);
-                                MainMenu();
-                                isInputCorrect = false;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.Write("\n Either blank fields or an age value below zero have been entered. " +
-                            "\n Try entering the data again.");
-                        UserInputNameAnimal(choiceAnimal);
-                        isInputCorrect = false;
-                    }
+                    ReinterpretationAgeAnimal(choiceAnimal, name, age);
+                    isInputCorrect = false;
                 }
                 catch
                 {
@@ -298,12 +266,95 @@ namespace LW5_Siadro
             }
         }
 
+        public static void ReinterpretationAgeAnimal(int choiceAnimal, string name, int age)
+        {
+            while (isInputCorrect)
+            {
+                try
+                {
+                    Console.WriteLine("\n Are you happy with the age you've given the animal?" +
+                        "\n [1] Yes" +
+                        "\n [2] Nah, I want to change the animal's age.");
+
+                    Console.Write("\n Your choice (number): ");
+                    choice = Convert.ToInt32(Console.ReadLine());
+
+                    switch (choice)
+                    {
+                        case 1:
+                            if (age > 0 && name != "")
+                            {
+                                switch (choiceAnimal)
+                                {
+                                    case 1:
+                                        Console.Clear();
+                                        species = "Herbivore";
+                                        elephant = new Elephant(name, species, age);
+                                        animalSystem.AddElephant(elephant);
+                                        MainMenu();
+                                        isInputCorrect = false;
+                                        break;
+
+                                    case 2:
+                                        Console.Clear();
+                                        species = "Carnivore";
+                                        lion = new Lion(name, species, age);
+                                        animalSystem.AddLion(lion);
+                                        MainMenu();
+                                        isInputCorrect = false;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.Write("\n Either blank fields or an age value below zero have been entered. " +
+                                    "\n Try entering the data again.\n");
+                                UserInputNameAnimal(choiceAnimal);
+                                isInputCorrect = false;
+                            }
+                            break;
+
+                        case 2:
+                            Console.Clear();
+                            UserInputAgeaAnimal(choiceAnimal, name);
+                            isInputCorrect = false;
+                            break;
+
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("\n It seems that you have entered a number that is not on this list. " +
+                                "\n Try entering it again: 1 or 2! :D");
+                            ReinterpretationAgeAnimal(choiceAnimal, name, age);
+                            isInputCorrect = false;
+                            break;
+                    }
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n Non-numeric data were entered." +
+                        "\n Try entering it again: 1 or 2! :D");
+                    ReinterpretationAgeAnimal(choiceAnimal, name, age);
+                    isInputCorrect = false;
+                }
+            }
+        }
 
         public static void PrintAllAnimals()
         {
-            Console.Clear();
-            animalSystem.PrintAllAnimals();
-            MainMenu();
+            if (elephant != null || lion != null) 
+            {
+                Console.Clear();
+                animalSystem.PrintAllAnimals();
+                MainMenu();
+            }
+            else
+            {
+                Console.Clear();
+                ReinterpretationAddAnimal();
+                isInputCorrect = false;
+            }
         }
 
         public static void PrintDetailInfoAnimal()
