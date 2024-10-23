@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAnimal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Animal xsi:type="Elephant">
+    <Name>Chris</Name>
+    <Species>Herbivore</Species>
+    <Age>51</Age>
+  </Animal>
+  <Animal xsi:type="Elephant">
+    <Name>Ada</Name>
+    <Species>Herbivore</Species>
+    <Age>50</Age>
+  </Animal>
+  <Animal xsi:type="Lion">
+    <Name>Leon</Name>
+    <Species>Carnivore</Species>
+    <Age>47</Age>
+  </Animal>
+  <Animal xsi:type="Lion">
+    <Name>Claire</Name>
+    <Species>Carnivore</Species>
+    <Age>41</Age>
+  </Animal>
+</ArrayOfAnimal>
